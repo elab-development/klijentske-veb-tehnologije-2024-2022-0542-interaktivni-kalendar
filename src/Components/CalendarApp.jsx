@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -8,6 +8,8 @@ import {
 } from "react-router-dom";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
+import User from "../Models/User";
+import Event from "../Models/Event";
 
 const CalendarApp = () => {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -148,10 +150,12 @@ const CalendarApp = () => {
   return (
     <div className="calendar-app">
       <div className="calendar">
-        <h1 className="heading">Calendar</h1>
+        <Link to="/Navbar" className="navbar">
+          <h1 className="heading">Calendar</h1>
+        </Link>
         <div className="navigate-date">
           {/* Uzimamo vrednost meseca da bude sadasnji mesec */}
-          <h2 className="month">{monthsOfYear[currentMonth]},</h2>
+          <h2 className="month"> {monthsOfYear[currentMonth]},</h2>
           {/* Uzimamo verdnost godine da bude sadasnja godina */}
           <h2 className="year">{currentYear}</h2>
           <div className="buttons">
@@ -282,10 +286,156 @@ const CalendarApp = () => {
   );
 };
 
+const Navbar = () => {
+  return (
+    <div className="Navbar">
+      <Link to="/" className="nav-link">
+        Calendar
+      </Link>
+      <Link to="/create-event" className="nav-link">
+        Create Event
+      </Link>
+      <Link to="/create-user" className="nav-link">
+        Create User
+      </Link>
+      <Link to="/event-list" className="nav-link">
+        Event List
+      </Link>
+      <Link to="/user-list" className="nav-link">
+        User List
+      </Link>
+    </div>
+  );
+};
+
+const CreateEventComponent = () => {
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleCreateEvent = () => {
+    const newEvent = new Event(name, date, description);
+    const events = JSON.parse(localStorage.getItem("events")) || [];
+    events.push(newEvent);
+    localStorage.setItem("events", JSON.stringify(events));
+    console.log(newEvent.getEventDetails());
+  };
+  return (
+    <div className="create-event">
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Event Name"
+      />
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+        placeholder="Event Date"
+      />
+      <textarea
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Event Description"
+      ></textarea>
+      <button onClick={handleCreateEvent}>Create Event</button>
+    </div>
+  );
+};
+
+const CreateUserComponent = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+
+  const handleCreateUser = () => {
+    const newUser = new User(username, password, email);
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+
+    console.log(newUser.getUserInfo());
+  };
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+      />
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+      />
+      <button onClick={handleCreateUser}>Create User</button>
+    </div>
+  );
+};
+
+const EventListComponent = () => {
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    const storedEvents = JSON.parse(localStorage.getItem("events")) || [];
+    const events = storedEvents.map(
+      (event) => new Event(event.name, event.date, event.description)
+    );
+    setEvents(events);
+  }, []);
+
+  return (
+    <div>
+      {events.map((event, index) => (
+        <div key={index} className="event-list">
+          <p>{event.name}</p>
+          <p>{event.date}</p>
+          <p>{event.description}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const UserListComponent = () => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
+    setUsers(
+      storedUsers.map(
+        (user) => new User(user.username, user.password, user.email)
+      )
+    );
+  }, []);
+
+  return (
+    <div>
+      {users.map((user, index) => (
+        <div key={index} className="user-list">
+          <h>{user.username}</h>
+          <p>{user.email}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const LoginPage = () => {
   // Jos neki hooks-ovi za unosenje inputa i funkcije za brisanje teksta nakon kilka na dugme
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -296,6 +446,12 @@ const LoginPage = () => {
   };
 
   const logIn = () => {
+    if (email === "klijentske" && password === "klijentske") {
+      navigate("/profil");
+    } else {
+      alert("Inccorect email or password!");
+    }
+
     setEmail("");
     setPassword("");
   };
@@ -350,6 +506,43 @@ const LoginPage = () => {
           Sing up
         </Link>
       </p>
+    </div>
+  );
+};
+
+const ProfilPage = () => {
+  return (
+    <div className="profile">
+      <h1 className="nameSurname">Klijentske Klijentske</h1>
+      <div className="icon">
+        <i class="bx bxs-face-mask"></i>
+      </div>
+      <div className="info">
+        <div className="info1">
+          <i class="bx bxs-face-mask"></i>
+          <p className="info1-text">Name: Klijentske</p>
+        </div>
+        <div className="info1">
+          <i class="bx bxs-balloon"></i>
+          <p className="info1-text">Surname: Klijentske</p>
+        </div>
+        <div className="info1">
+          <i class="bx bx-money-withdraw"></i>
+          <p className="info1-text">Job: Student</p>
+        </div>
+        <div className="info1">
+          <i class="bx bx-home"></i>
+          <p className="info1-text">Addres: Jove Ilica</p>
+        </div>
+        <div className="info1">
+          <i class="bx bxs-mobile"></i>
+          <p className="info1-text">Phone: +381 64 </p>
+        </div>
+      </div>
+
+      <Link to="/login" className="goback">
+        Previous page
+      </Link>
     </div>
   );
 };
@@ -535,12 +728,17 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/" element={<CalendarApp />} />
+        <Route path="/profil" element={<ProfilPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/questions" element={<SuggestionPage />} />
+        <Route path="/navbar" element={<Navbar />} />
+        <Route path="/create-event" element={<CreateEventComponent />} />
+        <Route path="/create-user" element={<CreateUserComponent />} />
+        <Route path="/event-list" element={<EventListComponent />} />
+        <Route path="/user-list" element={<UserListComponent />} />
       </Routes>
     </Router>
   );
 };
-
 export default App;
