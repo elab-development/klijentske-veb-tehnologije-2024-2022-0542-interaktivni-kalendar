@@ -39,6 +39,11 @@ const CalendarApp = () => {
   const [eventText, setEventText] = useState("");
   const [editingEvent, setEditingEvent] = useState(null);
 
+  // Sortira eventove po datumu
+  const sortByDate = (events) => {
+    return events.sort((a, b) => new Date(a.date) - new Date(b.date));
+  };
+
   // Broj dana u mesecu / dan u sedmici za prvi dan meseca
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
@@ -287,8 +292,12 @@ const CalendarApp = () => {
 };
 
 const Navbar = () => {
+  const navigate = useNavigate();
   return (
     <div className="Navbar">
+      <button className="goback" onClick={() => navigate(-1)}>
+        Go back
+      </button>
       <Link to="/" className="nav-link">
         Calendar
       </Link>
@@ -312,6 +321,9 @@ const CreateEventComponent = () => {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
+
+  // za navigaciju
+  const navigate = useNavigate();
 
   const handleCreateEvent = () => {
     const newEvent = new Event(name, date, description);
@@ -340,6 +352,9 @@ const CreateEventComponent = () => {
         placeholder="Event Description"
       ></textarea>
       <button onClick={handleCreateEvent}>Create Event</button>
+      <button className="goback" onClick={() => navigate(-1)}>
+        Go back
+      </button>
     </div>
   );
 };
@@ -348,6 +363,8 @@ const CreateUserComponent = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+
+  const navigate = useNavigate();
 
   const handleCreateUser = () => {
     const newUser = new User(username, password, email);
@@ -379,12 +396,17 @@ const CreateUserComponent = () => {
         placeholder="Email"
       />
       <button onClick={handleCreateUser}>Create User</button>
+      <button className="goback" onClick={() => navigate(-1)}>
+        Go back
+      </button>
     </div>
   );
 };
 
 const EventListComponent = () => {
   const [events, setEvents] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedEvents = JSON.parse(localStorage.getItem("events")) || [];
@@ -403,12 +425,17 @@ const EventListComponent = () => {
           <p>{event.description}</p>
         </div>
       ))}
+      <button className="goback" onClick={() => navigate(-1)}>
+        Go back
+      </button>
     </div>
   );
 };
 
 const UserListComponent = () => {
   const [users, setUsers] = useState([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
@@ -427,6 +454,9 @@ const UserListComponent = () => {
           <p>{user.email}</p>
         </div>
       ))}
+      <button className="goback" onClick={() => navigate(-1)}>
+        Go back
+      </button>
     </div>
   );
 };
