@@ -10,8 +10,12 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import User from "../Models/User";
 import Event from "../Models/Event";
+import React from 'react';
+
 
 const CalendarApp = () => {
+
+
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const monthsOfYear = [
     "January",
@@ -28,6 +32,7 @@ const CalendarApp = () => {
     "December",
   ];
 
+
   // Ovde su navedeni hook-voi koje koristimo u projektu
   const currentDate = new Date();
   const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
@@ -39,11 +44,9 @@ const CalendarApp = () => {
   const [eventText, setEventText] = useState("");
   const [editingEvent, setEditingEvent] = useState(null);
 
-  // Sortira eventove po datumu
-  const sortByDate = (events) => {
-    return events.sort((a, b) => new Date(a.date) - new Date(b.date));
-  };
-
+ 
+  
+  
   // Broj dana u mesecu / dan u sedmici za prvi dan meseca
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
   const firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
@@ -98,6 +101,7 @@ const CalendarApp = () => {
         "0"
       )}`,
       text: eventText,
+
     };
 
     // Kopiramo postojeci niz eventu u upadatedEvents zbog azuriranja
@@ -292,12 +296,11 @@ const CalendarApp = () => {
 };
 
 const Navbar = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //za navigaciju
   return (
     <div className="Navbar">
-      <button className="goback" onClick={() => navigate(-1)}>
-        Go Back
-      </button>
+      
+      <button className="goback" onClick={() => navigate(-1)}>Go Back</button> {/* Novo dugme Go Back*/}
       <Link to="/" className="nav-link">
         Calendar
       </Link>
@@ -321,10 +324,7 @@ const CreateEventComponent = () => {
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [description, setDescription] = useState("");
-
-  // za navigaciju
-  const navigate = useNavigate();
-
+  const navigate = useNavigate(); //za navigaciju
   const handleCreateEvent = () => {
     const newEvent = new Event(name, date, description);
     const events = JSON.parse(localStorage.getItem("events")) || [];
@@ -352,20 +352,16 @@ const CreateEventComponent = () => {
         placeholder="Event Description"
       ></textarea>
       <button onClick={handleCreateEvent}>Create Event</button>
-      <button className="goback" onClick={() => navigate(-1)}>
-        Go back
-      </button>
+      <button className="goback" onClick={() => navigate(-1)}>Go Back</button> {/* Novo dugme Go Back*/}
     </div>
   );
 };
 
-const CreateUserComponent = () => {
+ const CreateUserComponent = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
-  const navigate = useNavigate();
-
+  const navigate = useNavigate(); //za navigaciju
   const handleCreateUser = () => {
     const newUser = new User(username, password, email);
     const users = JSON.parse(localStorage.getItem("users")) || [];
@@ -396,19 +392,16 @@ const CreateUserComponent = () => {
         placeholder="Email"
       />
       <button onClick={handleCreateUser}>Create User</button>
-      <button className="goback" onClick={() => navigate(-1)}>
-        Go back
-      </button>
+      <button className="goback" onClick={() => navigate(-1)}>Go Back</button> {/* Novo dugme Go Back*/}
     </div>
   );
 };
 
 const EventListComponent = () => {
   const [events, setEvents] = useState([]);
-
-  const navigate = useNavigate();
-
+  const navigate = useNavigate(); //za navigaciju
   useEffect(() => {
+
     const storedEvents = JSON.parse(localStorage.getItem("events")) || [];
     const events = storedEvents.map(
       (event) => new Event(event.name, event.date, event.description)
@@ -425,18 +418,14 @@ const EventListComponent = () => {
           <p>{event.description}</p>
         </div>
       ))}
-      <button className="goback" onClick={() => navigate(-1)}>
-        Go back
-      </button>
+      <button className="goback" onClick={() => navigate(-1)}>Go Back</button> {/* Novo dugme Go Back*/}
     </div>
   );
 };
 
 const UserListComponent = () => {
   const [users, setUsers] = useState([]);
-
-  const navigate = useNavigate();
-
+  const navigate = useNavigate(); //za navigaciju
   useEffect(() => {
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
     setUsers(
@@ -454,14 +443,12 @@ const UserListComponent = () => {
           <p>{user.email}</p>
         </div>
       ))}
-      <button className="goback" onClick={() => navigate(-1)}>
-        Go back
-      </button>
+      <button className="goback" onClick={() => navigate(-1)}>Go Back</button> {/* Novo dugme Go Back*/}
     </div>
   );
 };
 
-const LoginPage = () => {
+ export const LoginPage = () => {
   // Jos neki hooks-ovi za unosenje inputa i funkcije za brisanje teksta nakon kilka na dugme
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -520,13 +507,13 @@ const LoginPage = () => {
       {/* Linkovi do sledecih aplikacija */}
       <div className="app-buttons">
         <a href="https://www.facebook.com" className="bx-link-login">
-          <i class="bx bxl-facebook"></i>
+          <i className="bx bxl-facebook"></i>
         </a>
         <a href="https://twitter.com" className="bx-link-login">
-          <i class="bx bxl-twitter"></i>
+          <i className="bx bxl-twitter"></i>
         </a>
         <a href="https://www.google.com" className="bx-link-login">
-          <i class="bx bxl-google"></i>
+          <i className="bx bxl-google"></i>
         </a>
       </div>
       {/* Salje nas stranicu register */}
@@ -545,27 +532,27 @@ const ProfilPage = () => {
     <div className="profile">
       <h1 className="nameSurname">Klijentske Klijentske</h1>
       <div className="icon">
-        <i class="bx bxs-face-mask"></i>
+        <i className="bx bxs-face-mask"></i>
       </div>
       <div className="info">
         <div className="info1">
-          <i class="bx bxs-face-mask"></i>
+          <i className="bx bxs-face-mask"></i>
           <p className="info1-text">Name: Klijentske</p>
         </div>
         <div className="info1">
-          <i class="bx bxs-balloon"></i>
+          <i className="bx bxs-balloon"></i>
           <p className="info1-text">Surname: Klijentske</p>
         </div>
         <div className="info1">
-          <i class="bx bx-money-withdraw"></i>
+          <i className="bx bx-money-withdraw"></i>
           <p className="info1-text">Job: Student</p>
         </div>
         <div className="info1">
-          <i class="bx bx-home"></i>
+          <i className="bx bx-home"></i>
           <p className="info1-text">Addres: Jove Ilica</p>
         </div>
         <div className="info1">
-          <i class="bx bxs-mobile"></i>
+          <i className="bx bxs-mobile"></i>
           <p className="info1-text">Phone: +381 64 </p>
         </div>
       </div>
@@ -771,4 +758,13 @@ const App = () => {
     </Router>
   );
 };
+
+
+export const sortByDate = (events) => {
+  return events.sort((a, b) => new Date(a.date) - new Date(b.date));
+};
+
+
+
 export default App;
+//export { LoginPage };

@@ -269,6 +269,96 @@
   overflow-wrap: break-word;
 }
 
+.create-event .go-back {
+  width: 30%;
+  margin: auto;
+  color: #ddd;
+  background-color: #ef9011;
+  box-shadow: 0 0 1.5rem 1rem rgba(239, 144, 17, 0.3);
+  border-radius: 15px;
+  padding: 1rem;
+  margin-top: -150px;
+  border: none;
+}
+
+.create-event .go-back:active {
+  transform: translateY(00.1rem);
+}
+
+.create-event .go-back i {
+  font-size: 1.6rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.create-user .go-back {
+  width: 30%;
+  margin: auto;
+  color: #ddd;
+  background-color: #ef9011;
+  box-shadow: 0 0 1.5rem 1rem rgba(239, 144, 17, 0.3);
+  border-radius: 15px;
+  padding: 1rem;
+  margin-top: -250px;
+  border: none;
+}
+
+.create-user .go-back:active {
+  transform: translateY(00.1rem);
+}
+
+.create-user .go-back i {
+  font-size: 1.6rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+
+.event-list .go-back {
+  width: 30%;
+  margin: auto;
+  color: #ddd;
+  background-color: #ef9011;
+  box-shadow: 0 0 1.5rem 1rem rgba(239, 144, 17, 0.3);
+  border-radius: 15px;
+  padding: 1rem;
+  margin-top: -250px;
+  border: none;
+}
+
+.event-list .go-back:active {
+  transform: translateY(00.1rem);
+}
+
+.event-list .go-back i {
+  font-size: 1.6rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.user-list .go-back {
+  width: 30%;
+  margin: auto;
+  color: #ddd;
+  background-color: #ef9011;
+  box-shadow: 0 0 1.5rem 1rem rgba(239, 144, 17, 0.3);
+  border-radius: 15px;
+  padding: 1rem;
+  margin-top: -250px;
+  border: none;
+}
+
+.user-list .go-back:active {
+  transform: translateY(00.1rem);
+}
+
+.user-list .go-back i {
+  font-size: 1.6rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+
 .event-buttons {
   position: absolute;
   top: 50%;
@@ -859,3 +949,4 @@
   color: #ddd;
   font-size: 2rem;
 }
+
