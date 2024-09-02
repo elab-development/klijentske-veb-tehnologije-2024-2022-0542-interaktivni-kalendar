@@ -27,7 +27,7 @@ const ProfilPage = () => {
         </div>
         <div className="info1">
           <i className="bx bxs-mobile"></i>
-          <p className="info1-text">Phone: +381 64 </p>
+          <p className="info1-text">Phone: +381 64 123 321 </p>
         </div>
       </div>
 
